@@ -1,16 +1,17 @@
 #include <stdio.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <sys/socket.h>
+#include <resolv.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 #include <sys/types.h>
-
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
-#define IP "127.0.0.1"
 #define PORT 8080
-#define MAX 1024
-
-SSL_CTX *ctx;
+#define MAXBUF 1024
