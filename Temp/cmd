@@ -1,0 +1,23 @@
+openssl genrsa -des3 -out ca.key 4096
+
+openssl req -new -key ca.key -subj "/C=TW/ST=Taiwan/L=Taipei City/O=NTUST/OU=CSIE/CN=CA@mail.com" -out ca.csr
+
+openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out CA.pem
+
+
+
+
+
+openssl genrsa -out server-key.pem 2048
+
+openssl req -new -key server-key.pem -subj "/C=TW/ST=Taiwan/L=Taipei City/O=NTUST/OU=CSIE/CN=Server@mail.com" -out server.csr
+
+openssl x509 -req -days 365 -in server.csr -CA ./CA.pem -CAkey ./ca.key -CAcreateserial -out Server-cert.pem -days 365
+
+
+
+openssl genrsa -out client-key.pem 2048
+
+openssl req -new -key client-key.pem -subj "/C=TW/ST=Taiwan/L=Taipei City/O=NTUST/OU=CSIE/CN=Client@mail.com" -out client.csr
+
+openssl x509 -req -days 365 -in client.csr -CA ./CA.pem -CAkey ./ca.key -CAcreateserial -out Client-cert.pem -days 365 
